@@ -5,6 +5,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
+import javafx.geometry.VPos;
+
+// https://stackoverflow.com/questions/14882806/center-text-on-canvas
 
 /* A program to draw a spider chart
  * 
@@ -49,10 +53,12 @@ public class SpiderChart extends Application{
 
 
 		// draw label
-		g.strokeText(String.valueOf(data[0]), 250, 45);
-		g.strokeText(String.valueOf(data[1]), 455, 250);
-		g.strokeText(String.valueOf(data[2]), 250, 465);
-		g.strokeText(String.valueOf(data[3]), 20, 250);
+		g.setTextAlign(TextAlignment.CENTER);
+		g.setTextBaseline(VPos.CENTER);
+		for (int i = 0; i < n; i++) {
+			double[] xy = PolarToXY(220, (i-1) * 2 * Math.PI / n);
+			g.strokeText(String.valueOf(data[0]), xy[0]+250, xy[1]+250);
+		}
 	}
 	
 	public static void main(String[] args) {
