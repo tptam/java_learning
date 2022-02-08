@@ -11,10 +11,17 @@ import javafx.scene.paint.Color;
  */
 public class SpiderChart extends Application{
 	
+	public double[] PolarToXY(double r, double theta) {
+		double[] xy = new double[2];
+		xy[0] = r * Math.cos(theta);
+		xy[1] = r * Math.sin(theta);
+		return xy;
+	}
+	
 	public void drawChart(GraphicsContext g, int width, int height, double[] data) {
 		// fill background
 		g.setFill(Color.WHITE);
-		g.fillRect(0, 0, width, height); // First, fill the entire image with a background color.
+		g.fillRect(0, 0, width, height);
 		
 		// draw polygon
 		double[] x = {250, 250 + 200 * data[1], 250, 250 - 200 * data[3]};
