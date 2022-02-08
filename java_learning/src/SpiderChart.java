@@ -14,12 +14,25 @@ import javafx.geometry.VPos;
  * 
  */
 public class SpiderChart extends Application{
+	final int WIDTH = 500;
+	final int HEIGHT = 500;
 	
-	public double[] PolarToXY(double r, double theta) {
+	public double[] polarToXY(double r, double theta) {
 		double[] xy = new double[2];
 		xy[0] = r * Math.cos(theta);
 		xy[1] = r * Math.sin(theta);
 		return xy;
+	}
+	
+	public double ithTheta(int n, int i) {
+		return Math.PI * 1.5 + i * 2 * Math.PI / n;
+	}
+	
+	public double[] adjustCoordsToCanvas(double x, double y, int width, int height) {
+		double[] xyCanvas = new double[2];
+		xyCanvas[0] = width / 2 + x;
+		xyCanvas[1] = height / 2 + y;
+		return xyCanvas;
 	}
 	
 	public void drawChart(GraphicsContext g, int width, int height, double[] data) {
@@ -32,7 +45,7 @@ public class SpiderChart extends Application{
 		double[] x = new double[n];
 		double[] y = new double[n];
 		for (int i = 0; i < n; i++) {
-			double[] xy = PolarToXY(200 * data[i], Math.PI * 1.5 + i * 2 * Math.PI / n);
+			double[] xy = polarToXY(200 * data[i], ithTheta(n, i));
 			x[i] = xy[0] + 250;
 			y[i] = xy[1] + 250;
 		}
@@ -47,7 +60,7 @@ public class SpiderChart extends Application{
 		
 		// draw axis
 		for (int i = 0; i < n; i++) {
-			double[] xy = PolarToXY(200, Math.PI * 1.5 + i * 2 * Math.PI / n);
+			double[] xy = polarToXY(200, ithTheta(n, i));
 			g.strokeLine(250, 250, xy[0]+250, xy[1]+250);
 		}
 
@@ -56,7 +69,7 @@ public class SpiderChart extends Application{
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
 		for (int i = 0; i < n; i++) {
-			double[] xy = PolarToXY(220, Math.PI * 1.5 + i * 2 * Math.PI / n);
+			double[] xy = polarToXY(220, ithTheta(n, i));
 			g.strokeText(String.valueOf(data[i]), xy[0]+250, xy[1]+250);
 		}
 	}
@@ -66,9 +79,9 @@ public class SpiderChart extends Application{
 	}
 	
 	public void start(Stage stage) {		
-		int width = 500;
-		int height = 500;
-		Canvas canvas = new Canvas(500, 500);
+		int width = WIDTH;
+		int height = HEIGHT;
+		Canvas canvas = new Canvas(width, height);
 		GraphicsContext g = canvas.getGraphicsContext2D();
 		// dummy data
 		double[] data = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
