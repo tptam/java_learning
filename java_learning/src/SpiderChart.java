@@ -28,16 +28,16 @@ public class SpiderChart extends Application{
 		g.fillRect(0, 0, width, height);
 		
 		// draw polygon
-		int n = 4;
+		int n = data.length;
 		double[] x = new double[n];
 		double[] y = new double[n];
 		for (int i = 0; i < n; i++) {
-			double[] xy = PolarToXY(200 * data[i], (i - 1) * 2 * Math.PI / n);
+			double[] xy = PolarToXY(200 * data[i], Math.PI * 1.5 + i * 2 * Math.PI / n);
 			x[i] = xy[0] + 250;
 			y[i] = xy[1] + 250;
 		}
 		g.setFill(Color.LIGHTBLUE);
-		g.fillPolygon(x, y, 4);
+		g.fillPolygon(x, y, n);
 		
 		// draw circles
 		g.strokeOval(50, 50, 400, 400);
@@ -47,7 +47,7 @@ public class SpiderChart extends Application{
 		
 		// draw axis
 		for (int i = 0; i < n; i++) {
-			double[] xy = PolarToXY(200, i * 2 * Math.PI / n);
+			double[] xy = PolarToXY(200, Math.PI * 1.5 + i * 2 * Math.PI / n);
 			g.strokeLine(250, 250, xy[0]+250, xy[1]+250);
 		}
 
@@ -56,8 +56,8 @@ public class SpiderChart extends Application{
 		g.setTextAlign(TextAlignment.CENTER);
 		g.setTextBaseline(VPos.CENTER);
 		for (int i = 0; i < n; i++) {
-			double[] xy = PolarToXY(220, (i-1) * 2 * Math.PI / n);
-			g.strokeText(String.valueOf(data[0]), xy[0]+250, xy[1]+250);
+			double[] xy = PolarToXY(220, Math.PI * 1.5 + i * 2 * Math.PI / n);
+			g.strokeText(String.valueOf(data[i]), xy[0]+250, xy[1]+250);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class SpiderChart extends Application{
 		Canvas canvas = new Canvas(500, 500);
 		GraphicsContext g = canvas.getGraphicsContext2D();
 		// dummy data
-		double[] data = {0.5, 0.9, 0.2, 0.6};
+		double[] data = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6};
 		drawChart(g, width, height, data);
 
 		BorderPane root = new BorderPane(canvas);
