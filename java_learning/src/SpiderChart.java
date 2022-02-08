@@ -24,8 +24,14 @@ public class SpiderChart extends Application{
 		g.fillRect(0, 0, width, height);
 		
 		// draw polygon
-		double[] x = {250, 250 + 200 * data[1], 250, 250 - 200 * data[3]};
-		double[] y = {250 - 200 * data[0], 250, 250 + 200 * data[2], 250};
+		int n = 4;
+		double[] x = new double[n];
+		double[] y = new double[n];
+		for (int i = 0; i < n; i++) {
+			double[] xy = PolarToXY(200 * data[i], (i - 1) * 2 * Math.PI / n);
+			x[i] = xy[0] + 250;
+			y[i] = xy[1] + 250;
+		}
 		g.setFill(Color.LIGHTBLUE);
 		g.fillPolygon(x, y, 4);
 		
@@ -34,13 +40,14 @@ public class SpiderChart extends Application{
 		g.strokeOval(100, 100, 300, 300);
 		g.strokeOval(150, 150, 200, 200);
 		g.strokeOval(200, 200, 100, 100);
-		g.setFill(Color.BLACK);
-		g.fillOval(249, 249, 2, 2);
 		
 		// draw axis
-		g.strokeLine(250, 50, 250, 450);
-		g.strokeLine(50, 250, 450, 250);
-		
+		for (int i = 0; i < n; i++) {
+			double[] xy = PolarToXY(200, i * 2 * Math.PI / n);
+			g.strokeLine(250, 250, xy[0]+250, xy[1]+250);
+		}
+
+
 		// draw label
 		g.strokeText(String.valueOf(data[0]), 250, 45);
 		g.strokeText(String.valueOf(data[1]), 455, 250);
