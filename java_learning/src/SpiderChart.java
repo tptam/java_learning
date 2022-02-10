@@ -23,9 +23,9 @@ public class SpiderChart extends Application{
 	}
 	
 	public double ithTheta(int n, int i) {
-		double theta0 = 0.5 * Math.PI;
-		double thetaDiff = i * (2 * Math.PI / n);
-		return theta0 - thetaDiff;
+		double thetaStart = 0.5 * Math.PI;			// start at 90 angle
+		double thetaDiff = -i * (2 * Math.PI / n);  // counterclockwise
+		return thetaStart + thetaDiff;
 	}
 	
 	public double[] adjustCoordsToCanvas(double x, double y, int width, int height) {
