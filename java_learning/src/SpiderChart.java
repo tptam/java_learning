@@ -36,8 +36,8 @@ public class SpiderChart extends Application{
 	}
 	
 	public void drawChart(GraphicsContext g, int width, int height, double[] data) {
-		double webStep = width / 10;
-		double webR = 4 * webStep;
+		double webSpace = width / 10;
+		double webR = 4 * webSpace;
 
 		// fill background
 		g.setFill(Color.WHITE);
@@ -57,11 +57,9 @@ public class SpiderChart extends Application{
 		g.fillPolygon(x, y, n);
 		
 		// draw circles
-		
 		for (int i = 1; i < 5; i++) {
-			double start = webStep * i;
-			double end = width - webStep * 2 * i;
-			System.out.println(start + " " + end);
+			double start = webSpace * i;
+			double end = width - webSpace * 2 * i;
 			g.strokeOval(start, start, end, end);
 		}
 
